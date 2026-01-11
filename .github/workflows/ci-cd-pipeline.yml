@@ -2,11 +2,9 @@ name: CI/CD Pipeline for Microservices
 
 on:
   push:
+    branches: [ main, gitops ]
+    pull_request:
     branches: [ main ]
-    branches: [ gitops ]
-  pull_request:
-    branches: [ main ]
-    branches: [ gitops ]
   workflow_dispatch:
     inputs:
       force_build_all:
