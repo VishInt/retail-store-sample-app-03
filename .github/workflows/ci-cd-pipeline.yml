@@ -92,7 +92,7 @@ jobs:
   # Job 2: Build and push Docker images for changed services
   build-and-push:
     needs: detect-changes
-    if: needs.detect-changes.outputs.changed-services != '[]' || github.event.inputs.force_build_all == 'true'
+      if: needs.detect-changes.outputs.changed-services != '[]'
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -157,7 +157,7 @@ jobs:
   # Job 3: Update Helm charts (only on main branch)
   update-helm-charts:
     needs: [detect-changes, build-and-push]
-    if: github.ref == 'refs/heads/main'&& (needs.detect-changes.outputs.changed-services != '[]'|| github.event.inputs.force_build_all == 'true')
+    if: github.ref == 'refs/heads/main' && needs.detect-changes.outputs.changed-services != '[]'
     runs-on: ubuntu-latest
     strategy:
       matrix:
