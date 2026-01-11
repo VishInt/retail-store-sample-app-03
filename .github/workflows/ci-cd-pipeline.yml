@@ -212,10 +212,9 @@ jobs:
             echo "No changes to commit for ${{ matrix.service }}"
           else
             # Commit the changes
-            git commit -m "chore: update ${{ matrix.service }} image tag to ${{ github.sha:0:8 }}
+            git commit -m "chore: update ${{ matrix.service }} image tag 
             
             - Updated Helm chart values.yaml
-            - New image tag: ${{ github.sha:0:8 }}
             - Triggered by: ${{ github.event_name }}
             - Commit: ${{ github.sha }}"
             
