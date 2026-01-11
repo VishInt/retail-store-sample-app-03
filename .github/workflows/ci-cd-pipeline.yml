@@ -3,7 +3,7 @@ name: CI/CD Pipeline for Microservices
 on:
   push:
     branches: [ main, gitops ]
-    pull_request:
+  pull_request:
     branches: [ main ]
   workflow_dispatch:
     inputs:
@@ -92,7 +92,7 @@ jobs:
   # Job 2: Build and push Docker images for changed services
   build-and-push:
     needs: detect-changes
-      if: needs.detect-changes.outputs.changed-services != '[]'
+    if: needs.detect-changes.outputs.changed-services != '[]'
     runs-on: ubuntu-latest
     strategy:
       matrix:
