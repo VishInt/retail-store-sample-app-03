@@ -1,30 +1,31 @@
 # Build Stage
-FROM public.ecr.aws/amazonlinux/amazonlinux:2023 AS build-env
+ FROM public.ecr.aws/amazonlinux/amazonlinux:2023 AS build-env
 
 # We tell DNF not to install Recommends and Suggests packages, keeping our
 # installed set of packages as minimal as possible.
 RUN dnf --setopt=install_weak_deps=False install -q -y \
     maven \
     java-21-amazon-corretto-headless \
+    bash \
+    dos2unix \
     which \
     tar \
     gzip \
-    && \
-    dnf clean all
+    && dnf clean all
 
-VOLUME /tmp
-WORKDIR /
+WORKDIR /app
 
 COPY .mvn .mvn
 COPY mvnw .
 COPY pom.xml .
+RUN dos2unix mvnw && chmod +x mvnw
 
 RUN ./mvnw dependency:go-offline -B -q
 
-COPY ./src ./src
+COPY src src
 
 RUN ./mvnw -DskipTests package -q && \
-    mv /target/ui-0.0.1-SNAPSHOT.jar /app.jar
+    mv target/ui-0.0.1-SNAPSHOT.jar /app.jar
 
 # Package Stage
 FROM public.ecr.aws/amazonlinux/amazonlinux:2023

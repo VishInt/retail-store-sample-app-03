@@ -2,6 +2,8 @@
 
 <!-- GitOps Test: Final workflow validation -->
 
+<!-- Test commit -->
+
 | Language | Persistence |
 | -------- | ----------- |
 | Go       | MySQL       |
